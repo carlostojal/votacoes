@@ -21,16 +21,45 @@
       <div id="vote_area">
         <div class="form-group">
           <label for="boletim">Nº de Boletim</label>
-          <input type="password" class="form-control" id="boletim" placeholder="Introduza o seu nº de boletim">
+          <input type="number" class="form-control" id="boletim" placeholder="Introduza o seu nº de boletim">
           <small class="form-text text-muted">O nº de boletim foi enviado para o seu endereço de email.</small>
         </div>
-        <button class="btn btn-primary">Votar</button>
+        <div class="form-group">
+          <label for="lista">Lista</label>
+          <div id="listas_spinner" class="spinner-border" role="status">
+            <span class="sr-only">Carregando...</span>
+          </div>
+          <select id="listas" class="form-control"></select>
+        </div>
+        <button id="vote" class="btn btn-primary">
+          <div id="vote_spinner" class="spinner-border" role="status">
+            <span class="sr-only">Carregando...</span>
+          </div>
+          <span id="vote_text">Votar</span>
+        </button>
       </div>
     </div>
     <script>
 
-      $("#vote_area").hide();
+      // $("#vote_area").hide();
       $("#register_spinner").hide();
+      $("#vote_spinner").hide();
+      $("#listas").hide();
+
+      $.get("./api/getListas.php", (data) => {
+
+        $("#listas").show();
+        $("#listas_spinner").hide();
+
+        const listas = JSON.parse(data);
+
+        listas.map((lista) => {
+          $("#listas").append(`
+            <option>${lista.nome}</option>
+          `);
+        });
+
+      });
 
 
       $("#register").click(() => {
@@ -43,7 +72,7 @@
 
           const email = $("#email").val();
 
-          $.post("api/registar.php", {email}, (data) => {
+          $.post("./api/registar.php", {email}, (data) => {
             $("#register_text").show();
             $("#register_spinner").hide();
 
@@ -63,6 +92,43 @@
 
         });        
       });
+
+      $("#vote").click(() => {
+
+        const email = $("#email").val();
+        const codigo = $("#boletim").val();
+        const lista = $("#listas :selected").text();
+
+        alertify.confirm("Confirmar voto", `O aluno, com email <b>${email}</b> e nº de boletim
+          <b>${codigo}</b>, irá registar o seu voto na lista <b>'${lista}'<b>.<br><br><b>Confirma?<b>`, () => {
+
+            $("#vote_text").hide();
+            $("#vote_spinner").show();
+            
+            $.post("./api/votar.php", {email, codigo, lista}, (data) => {
+
+              $("#vote_text").show();
+              $("#vote_spinner").hide();
+
+              if(data == "OK")
+                alertify.alert("Sucesso", "Voto registado com sucesso.", () => {
+                  window.location = "./index.php";
+                });
+              else if(data == "EMAIL_NOT_REGISTERED")
+                alertify.warning("Este email ainda não pediu um boletim.");
+              else if(data == "INVALID_CODE")
+                alertify.warning("Nº de Boletim incorreto.");
+              else if(data == "ALREADY_VOTED")
+                alertify.warning("Já foi registado um voto anteriormente.");
+              else
+                alertify.error("Erro ao registar o voto.");
+
+            });
+          }, () => {
+
+          });
+      });
+
     </script>
   </body>
 </html>
