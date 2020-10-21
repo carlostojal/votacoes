@@ -26,10 +26,26 @@
       echo "ALREADY_VOTED";
       exit();
     } else {
-      
+
+      $mail = new PHPMailer();
+
+      $mail->isSMTP();
+      $mail->Host = "smtp1.example.com";
+      $mail->SMTPAuth = true;
+      $mail->Username = "mail@mail.com";
+      $mail->Password = "password";
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 587;
+
+      $mail->setAddress($email);
+      $mail->Subject = "Boletim de voto";
+      $mail->Body = "Boletim de voto nº".$id.".";
+
+      $mail->send();
+
+      echo "RESENT";
+      exit();
     }
-    // se foi usado, retorna erro e sai
-    // senão, reenvia código do boletim
   }
 
   $sql = "INSERT INTO Boletim (id, email) VALUES (?, ?)";
