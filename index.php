@@ -4,6 +4,7 @@
     <title> Votações </title>
   </head>
   <body>
+    <?php require("./credits.php") ?>
     <?php require("./navbar.php") ?>
     <div class="jumbotron">
       <h1 class="display-4"> Listas AERBP</h1>

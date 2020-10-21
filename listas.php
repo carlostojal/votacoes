@@ -4,6 +4,7 @@
     <title> Listas </title>
   </head>
   <body>
+    <?php require("./credits.php") ?>
     <?php require("./navbar.php") ?>
     <div class="container-fluid">
       <div id="spinner" class="spinner-border" role="status">

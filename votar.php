@@ -4,6 +4,7 @@
     <title> Votações </title>
   </head>
   <body>
+    <?php require("./credits.php") ?>
     <?php require("./navbar.php") ?>
     <div class="container">
       <div class="form-group">
@@ -36,7 +37,7 @@
 
         const email = $("#email").val();
 
-        alertify.confirm(`O email está correto?<br><br><b>${email}</b>`, () => {
+        alertify.confirm("Confirmar email", `O email está correto?<br><br><b>${email}</b>`, () => {
           $("#register_text").hide();
           $("#register_spinner").show();
 
@@ -48,6 +49,8 @@
 
             if(data == "OK")
               alertify.success("Boletim registado. Verifique o seu email.");
+            else if(data == "RESENT")
+              alertify.success("Boletim reenviado. Verifique o seu email.");
             else if(data == "EMAIL_NOT_PROVIDED")
               alertify.warning("Forneça um endereço de email.");
             else if(data == "ALREADY_VOTED")

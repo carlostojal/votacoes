@@ -5,10 +5,11 @@
     exit();
   }
 
-  $id = rand(1, 1000);
+  $id = rand(1, 10000);
   $email = $_POST["email"];
 
   require("./connection.php");
+  require("./sendCode.php");
 
   $sql = "SELECT id, usado FROM Boletim WHERE email = ?";
   $stm = $conn->prepare($sql);
@@ -22,7 +23,7 @@
       echo "ALREADY_VOTED";
       exit();
     } else {
-      sendCode($row["id"]);
+      sendCode($row["id"], $email);
       echo "RESENT";
       exit();
     }
@@ -33,7 +34,7 @@
   $stm->bind_param("is", $id, $email);
   $stm->execute();
 
-  sendCode($id);
+  sendCode($id, $email);
   echo "OK";
 
   $stm->close();
