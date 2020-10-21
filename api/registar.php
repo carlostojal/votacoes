@@ -21,6 +21,13 @@
 
   $result = $stm->get_result();
   if($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if($row["usado"]) {
+      echo "ALREADY_VOTED";
+      exit();
+    } else {
+      
+    }
     // se foi usado, retorna erro e sai
     // senão, reenvia código do boletim
   }
@@ -31,6 +38,8 @@
   $stm->execute();
 
   // envia código do boletim
+
+  echo "OK";
 
   $stm->close();
   $conn->close();

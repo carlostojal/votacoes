@@ -14,7 +14,7 @@
     </div>
     <script>
 
-      $.get("/api/getListas.php", (data) => {
+      $.get("./api/getListas.php", (data) => {
 
         $("#spinner").remove();
 
@@ -22,7 +22,7 @@
 
         listas.map((lista) => {
           $("#area_listas").append(`
-            <div class="col col-sm">
+            <div class="col col-sm-3">
               <div class="card" style="width: 18rem">
                 <img class="card-img-top" src="img/img.svg">
                 <div class="card-body">

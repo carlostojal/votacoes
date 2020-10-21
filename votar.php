@@ -34,17 +34,31 @@
 
       $("#register").click(() => {
 
-        $("#register_text").hide();
-        $("#register_spinner").show();
-
         const email = $("#email").val();
 
-        $.post("api/registar.php", {email}, () => {
-          $("#register_text").show();
-          $("#register_spinner").hide();
-        });
+        alertify.confirm(`O email está correto?<br><br><b>${email}</b>`, () => {
+          $("#register_text").hide();
+          $("#register_spinner").show();
 
-        $("#vote_area").show();
+          const email = $("#email").val();
+
+          $.post("api/registar.php", {email}, (data) => {
+            $("#register_text").show();
+            $("#register_spinner").hide();
+
+            if(data == "OK")
+              alertify.success("Boletim registado. Verifique o seu email.");
+            else if(data == "EMAIL_NOT_PROVIDED")
+              alertify.warning("Forneça um endereço de email.");
+            else if(data == "ALREADY_VOTED")
+              alertify.warning("Já votou.");
+            else
+              alertify.error("Erro ao registar o boletim.");
+          });
+          $("#vote_area").show();
+        }, () => {
+
+        });        
       });
     </script>
   </body>
