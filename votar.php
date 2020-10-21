@@ -22,7 +22,7 @@
         <div class="form-group">
           <label for="boletim">Nº de Boletim</label>
           <input type="number" class="form-control" id="boletim" placeholder="Introduza o seu nº de boletim">
-          <small class="form-text text-muted">O nº de boletim foi enviado para o seu endereço de email.</small>
+          <small class="form-text text-muted">Este número foi enviado para o endereço de email.</small>
         </div>
         <div class="form-group">
           <label for="lista">Lista</label>
@@ -31,6 +31,9 @@
           </div>
           <select id="listas" class="form-control"></select>
         </div>
+        <p class="text-muted">O endereço de email em conjunto com o nº de boletim são utilizados
+        apenas como forma de autorização e controlo dos votos, garantindo o voto único.
+        O voto é completamente anónimo.</p>
         <button id="vote" class="btn btn-primary">
           <div id="vote_spinner" class="spinner-border" role="status">
             <span class="sr-only">Carregando...</span>
