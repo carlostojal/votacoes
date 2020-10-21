@@ -1,7 +1,7 @@
 <html>
   <head>
     <?php require("./head.php") ?>
-    <title> Votações </title>
+    <title> Votar </title>
   </head>
   <body>
     <?php require("./credits.php") ?>
