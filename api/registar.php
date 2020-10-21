@@ -22,7 +22,7 @@
       echo "ALREADY_VOTED";
       exit();
     } else {
-      sendCode($id);
+      sendCode($row["id"]);
       echo "RESENT";
       exit();
     }
