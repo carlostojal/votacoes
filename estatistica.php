@@ -1,4 +1,9 @@
 <html>
+  <?php
+
+    if(!isset($_SESSION["username"]))
+      header("location: ./login.php");
+  ?>
   <head>
     <?php require("./head.php") ?>
     <script src="./libs/chartjs/package/dist/Chart.js"></script>
@@ -7,7 +12,7 @@
   </head>
   <body>
     <?php require("./credits.php") ?>
-    <?php require("./navbar.php") ?>
+    <?php require("./navbar_admin.php") ?>
     <div class="jumbotron">
       <h1 id="winner" class="display-4">Carregando vencedor...</h1>
       <p id="winner_votes" class="lead">Carregando nº de votos...</p>
@@ -40,10 +45,10 @@
           }
         });
 
-        const ctxGraficoBarras = document.getElementById("graficoBarras").getContext("2d");
+        const ctxGraficoCircular = document.getElementById("graficoCircular").getContext("2d");
 
-        const graficoBarras = new Chart(ctxGraficoBarras, {
-          type: "bar",
+        const graficoCircular = new Chart(ctxGraficoCircular, {
+          type: "pie",
           data: {
             labels: labels,
             datasets: [{
@@ -54,10 +59,10 @@
           }
         });
 
-        const ctxGraficoCircular = document.getElementById("graficoCircular").getContext("2d");
+        const ctxGraficoBarras = document.getElementById("graficoBarras").getContext("2d");
 
-        const graficoCircular = new Chart(ctxGraficoCircular, {
-          type: "pie",
+        const graficoBarras = new Chart(ctxGraficoBarras, {
+          type: "bar",
           data: {
             labels: labels,
             datasets: [{
