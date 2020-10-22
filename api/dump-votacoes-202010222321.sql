@@ -26,6 +26,7 @@ CREATE TABLE `Boletim` (
   `id` int NOT NULL,
   `email` varchar(100) NOT NULL,
   `usado` tinyint(1) NOT NULL DEFAULT '0',
+  `endereco_ip` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`,`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -49,6 +50,20 @@ CREATE TABLE `Lista` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `Utilizador`
+--
+
+DROP TABLE IF EXISTS `Utilizador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Utilizador` (
+  `username` varchar(30) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping routines for database 'votacoes'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +76,4 @@ CREATE TABLE `Lista` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-21 22:57:23
+-- Dump completed on 2020-10-22 23:21:00
