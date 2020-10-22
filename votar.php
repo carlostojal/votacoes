@@ -49,6 +49,9 @@
       $("#vote_spinner").hide();
       $("#listas").hide();
 
+      $("#email").val(localStorage.getItem("email"));
+      $("#boletim").val(localStorage.getItem("code"));
+
       $.get("./api/getListas.php", (data) => {
 
         $("#listas").show();
@@ -58,10 +61,22 @@
 
         listas.map((lista) => {
           $("#listas").append(`
-            <option>${lista.nome}</option>
+            <option ${lista.nome == localStorage.getItem("lista") ? "selected" : ""}>${lista.nome}</option>
           `);
         });
 
+      });
+
+      $("#email").on("input", () => {
+        localStorage.setItem("email", $("#email").val());
+      });
+
+      $("#boletim").on("input", () => {
+        localStorage.setItem("code", $("#boletim").val());
+      });
+
+      $("#listas").on("change", () => {
+        localStorage.setItem("lista", $("#listas :selected").text());
       });
 
 
@@ -87,6 +102,8 @@
               alertify.warning("Forneça um endereço de email.");
             else if(data == "ALREADY_VOTED")
               alertify.warning("Já votou.");
+            else if(data == "REGISTER_BLOCKED")
+              alertify.warning("Foi detetado um comportamento estranho, pelo que o seu registo foi bloqueado.");
             else
               alertify.error("Erro ao registar o boletim.");
           });

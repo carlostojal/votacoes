@@ -15,6 +15,11 @@
     </div>
     <script>
 
+      function onVote(lista) {
+        localStorage.setItem("lista", lista);
+        window.location = "./votar.php";
+      }
+
       $.get("./api/getListas.php", (data) => {
 
         $("#spinner").remove();
@@ -29,6 +34,7 @@
                 <div class="card-body">
                   <h5 class="card-title">${lista.nome}</h5>
                   <p class="card-text">${lista.descricao}</p>
+                  <button class="btn btn-primary" onclick="onVote('${lista.nome}')">Votar</button>
                 </div>
               </div>
             </div>
