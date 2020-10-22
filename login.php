@@ -34,7 +34,7 @@
       $.post("./api/login.php", {username, password}, (data) => {
 
         if(data == "OK")
-          window.replace("./estatistica.php");
+          window.location.replace("./estatistica.php");
         else if(data == "USERNAME_NOT_PROVIDED")
           alertify.warning("Username não fornecido.");
         else if(data == "PASSWORD_NOT_PROVIDED")

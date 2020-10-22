@@ -12,6 +12,26 @@
         <a class="nav-link" href="registar-lista.php">Registar Lista</a>
       </li>
     </ul>
-    <a class="btn btn-primary" href="logout.php">Logout</a>
+    <button id="logout" class="btn btn-primary" href="logout.php">
+      <div id="logout_spinner" class="spinner-border" role="status">
+        <span class="sr-only">Carregando...</span>
+      </div>
+      <span id="logout_text">Logout</span>
+    </button>
   </div>
 </nav>
+<script>
+
+  $("#logout_spinner").hide();
+
+  $("#logout").click(() => {
+
+    $("#logout_text").hide();
+    $("#logout_spinner").show();
+
+    $.get("./api/logout.php", () => {
+      window.location = "./index.php";
+    });
+
+  });
+</script>

@@ -1,8 +1,11 @@
 <html>
   <?php
 
+    session_start();
+
     if(!isset($_SESSION["username"]))
       header("location: ./login.php");
+
   ?>
   <head>
     <?php require("./head.php") ?>
@@ -21,6 +24,15 @@
       <canvas id="graficoCircular"></canvas>
       <canvas id="graficoBarras"></canvas>
     </div>
+    <div class="container">
+      <table id="table" class="table">
+        <tr>
+          <th>Nome</th>
+          <th>Nº de Votos</th>
+          <th>Percentagem</th>
+        </tr>
+      </table>
+    </div>
     <script>
 
       var votes;
@@ -31,11 +43,13 @@
 
         let n_votos = [];
         let labels = [];
+        let votes_sum = 0;
         let colors = [];
         let max = 0;
         votes.map((lista) => {
           n_votos.push(lista.n_votos);
           labels.push(lista.nome);
+          votes_sum += parseInt(lista.n_votos);
           colors.push(`rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`);
 
           if(lista.n_votos > max) {
@@ -44,6 +58,24 @@
             max = lista.n_votos;
           }
         });
+
+        votes.map((lista) => {
+          $("#table").append(`
+            <tr>
+              <td>${lista.nome}</td>
+              <td>${lista.n_votos}</td>
+              <td>${((lista.n_votos / votes_sum) * 100).toFixed(2)}%</td>
+            </tr>
+          `);
+        });
+
+        $("#table").append(`
+            <tr>
+              <td></td>
+              <td><b>${votes_sum}<b></td>
+              <td></td>
+            </tr>
+          `);
 
         const ctxGraficoCircular = document.getElementById("graficoCircular").getContext("2d");
 

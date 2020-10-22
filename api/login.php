@@ -11,15 +11,15 @@
     exit();
   }
 
-  $username = $_POST["username"];
-  $password = $_POST["password"];
+  $user = $_POST["username"];
+  $pass = $_POST["password"];
 
   require("./connection.php");
 
-  $sql = "SELECT * FROM utilizadores WHERE username = ? AND password = ?";
+  $sql = "SELECT * FROM Utilizador WHERE username = ? AND password = ?";
 
-  $stm = $conn->prepare_statement($sql);
-  $stm->bind_param("ss", $username, md5($password));
+  $stm = $conn->prepare($sql);
+  $stm->bind_param("ss", $user, $pass);
   $stm->execute();
 
   $result = $stm->get_result();
@@ -29,7 +29,9 @@
     exit();
   }
 
-  $_SESSION["username"] = $username;
+  session_start();
+
+  $_SESSION["username"] = $user;
 
   echo "OK";
 
