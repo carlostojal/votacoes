@@ -6,6 +6,7 @@
   }
 
   $max_votes_per_ip = 3;
+  $should_limit_ip = true;
 
   $id = rand(1, 10000);
   $email = $_POST["email"];
@@ -34,15 +35,17 @@
   }
 
   // check if IP address voted the max allowed times
-  $sql = "SELECT id FROM Boletim WHERE endereco_ip = ?";
-  $stm = $conn->prepare($sql);
-  $stm->bind_param("s", $ip);
-  $stm->execute();
+  if($should_limit_ip) {
+    $sql = "SELECT id FROM Boletim WHERE endereco_ip = ?";
+    $stm = $conn->prepare($sql);
+    $stm->bind_param("s", $ip);
+    $stm->execute();
 
-  $result = $stm->get_result();
-  if($result->num_rows >= $max_votes_per_ip) {
-    echo "REGISTER_BLOCKED";
-    exit();
+    $result = $stm->get_result();
+    if($result->num_rows >= $max_votes_per_ip) {
+      echo "REGISTER_BLOCKED";
+      exit();
+    }
   }
 
   // register
