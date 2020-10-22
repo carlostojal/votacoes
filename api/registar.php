@@ -29,9 +29,11 @@
     }
   }
 
-  $sql = "INSERT INTO Boletim (id, email) VALUES (?, ?)";
+  $ip = $_SERVER["REMOTE_ADDR"];
+
+  $sql = "INSERT INTO Boletim (id, email, endereco_ip) VALUES (?, ?, ?)";
   $stm = $conn->prepare($sql);
-  $stm->bind_param("is", $id, $email);
+  $stm->bind_param("iss", $id, $email, $ip);
   $stm->execute();
 
   sendCode($id, $email);

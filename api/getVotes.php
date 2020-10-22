@@ -1,5 +1,10 @@
 <?php
 
+  if(!isset($_SESSION["username"])) {
+    echo "NOT_ALLOWED";
+    exit();
+  }
+
   require("./connection.php");
 
   $sql = "SELECT id, nome, n_votos FROM Lista";
