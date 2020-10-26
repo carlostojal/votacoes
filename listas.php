@@ -28,7 +28,7 @@
 
         listas.map((lista) => {
           $("#area_listas").append(`
-            <div class="col col-sm-3">
+            <div class="col">
               <div class="card" style="width: 18rem">
                 <img class="card-img-top" src="img/img.svg">
                 <div class="card-body">

@@ -91,6 +91,7 @@
           }
         });
 
+        /*
         const ctxGraficoBarras = document.getElementById("graficoBarras").getContext("2d");
 
         const graficoBarras = new Chart(ctxGraficoBarras, {
@@ -103,7 +104,7 @@
               backgroundColor: colors
             }]
           }
-        });
+      }); */
 
       });
 

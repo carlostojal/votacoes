@@ -119,8 +119,8 @@
         const codigo = $("#boletim").val();
         const lista = $("#listas :selected").text();
 
-        alertify.confirm("Confirmar voto", `O aluno, com email <b>${email}</b> e nº de boletim
-          <b>${codigo}</b>, irá registar o seu voto na lista <b>'${lista}'<b>.<br><br><b>Confirma?<b>`, () => {
+        alertify.confirm("Confirmar voto", `O aluno com email <b>${email}</b> e nº de boletim
+          <b>${codigo}</b> irá registar o seu voto na lista <b>'${lista}'<b>.<br><br><b>Confirma?<b>`, () => {
 
             $("#vote_text").hide();
             $("#vote_spinner").show();
@@ -137,7 +137,7 @@
               else if(data == "EMAIL_NOT_REGISTERED")
                 alertify.warning("Este email ainda não pediu um boletim.");
               else if(data == "INVALID_CODE")
-                alertify.warning("Nº de Boletim incorreto.");
+                alertify.warning("Nº de Boletim inválido.");
               else if(data == "ALREADY_VOTED")
                 alertify.warning("Já foi registado um voto anteriormente.");
               else
