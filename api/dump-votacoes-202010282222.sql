@@ -23,13 +23,24 @@ DROP TABLE IF EXISTS `Boletim`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Boletim` (
-  `id` int NOT NULL,
+  `cod` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `usado` tinyint(1) NOT NULL DEFAULT '0',
   `endereco_ip` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`,`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `cod_confirmacao` int NOT NULL,
+  PRIMARY KEY (`cod`,`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Boletim`
+--
+
+LOCK TABLES `Boletim` WRITE;
+/*!40000 ALTER TABLE `Boletim` DISABLE KEYS */;
+INSERT INTO `Boletim` VALUES (1,'a25772@ead-aerbp.pt',1,'::1',5955);
+/*!40000 ALTER TABLE `Boletim` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Lista`
@@ -50,6 +61,16 @@ CREATE TABLE `Lista` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Lista`
+--
+
+LOCK TABLES `Lista` WRITE;
+/*!40000 ALTER TABLE `Lista` DISABLE KEYS */;
+INSERT INTO `Lista` VALUES (1,'Lista A','Esta é a lista A',2,NULL),(2,'Lista B','Esta é a lista B',1,NULL);
+/*!40000 ALTER TABLE `Lista` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Utilizador`
 --
 
@@ -64,6 +85,16 @@ CREATE TABLE `Utilizador` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Utilizador`
+--
+
+LOCK TABLES `Utilizador` WRITE;
+/*!40000 ALTER TABLE `Utilizador` DISABLE KEYS */;
+INSERT INTO `Utilizador` VALUES ('carlostojal','password123');
+/*!40000 ALTER TABLE `Utilizador` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'votacoes'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -76,4 +107,4 @@ CREATE TABLE `Utilizador` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-22 23:21:00
+-- Dump completed on 2020-10-28 22:22:14

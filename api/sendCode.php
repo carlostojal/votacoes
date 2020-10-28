@@ -7,7 +7,7 @@
   require("../libs/phpmailer/src/PHPMailer.php");
   require("../libs/phpmailer/src/SMTP.php");
 
-  function sendCode($id, $email) {
+  function sendCode($cod, $cod_confirmacao, $email) {
 
     try {
 
@@ -25,7 +25,7 @@
       $mail->isHTML(true);
       $mail->addAddress($email);
       $mail->Subject = "Boletim de Voto - AERBP";
-      $mail->Body = "Ola.<br><br>Foi-te atribuido o boletim de voto no. <b>".$id."</b>.<br><br>Obrigado por votares.";
+      $mail->Body = "Ola.<br><br>Estes sao os dados de que necessitaras para votar.<br><br><ul><li><b>Nº de Boletim:</b> ".$cod."</li><li><b>Codigo de confirmacao:</b> ".$cod_confirmacao."</li></ul><br>Obrigado por votares.";
 
       $mail->send();
 

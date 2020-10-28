@@ -21,6 +21,7 @@
         <span id="login_text">Iniciar Sessão</span>
       </button>
     </div>
+    <?php require("./footer.php") ?>
   </body>
   <script>
 

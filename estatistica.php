@@ -20,19 +20,23 @@
       <h1 id="winner" class="display-4">Carregando vencedor...</h1>
       <p id="winner_votes" class="lead">Carregando nº de votos...</p>
     </div>
-    <div class="container">
-      <canvas id="graficoCircular"></canvas>
-      <canvas id="graficoBarras"></canvas>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col col-md-8">
+          <canvas id="graficoCircular"></canvas>
+        </div>
+        <div class="col col-md-4">
+          <table id="table" class="table">
+            <tr>
+              <th>Nome</th>
+              <th>Nº de Votos</th>
+              <th>Percentagem</th>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
-    <div class="container">
-      <table id="table" class="table">
-        <tr>
-          <th>Nome</th>
-          <th>Nº de Votos</th>
-          <th>Percentagem</th>
-        </tr>
-      </table>
-    </div>
+    <?php require("./footer.php") ?>
     <script>
 
       var votes;
@@ -90,21 +94,6 @@
             }]
           }
         });
-
-        /*
-        const ctxGraficoBarras = document.getElementById("graficoBarras").getContext("2d");
-
-        const graficoBarras = new Chart(ctxGraficoBarras, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [{
-              label: "Nº de votos",
-              data: n_votos,
-              backgroundColor: colors
-            }]
-          }
-      }); */
 
       });
 

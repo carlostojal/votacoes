@@ -16,6 +16,9 @@
 
   while($row = $result->fetch_assoc())
     $rows[] = $row;
+
+  // get empty votes
+  $sql = "SELECT COUNT(Boletim.cod) - SUM(Lista.n_votos) AS votos_brancos FROM Boletim JOIN Lista WHERE Boletim.usado = '1'";
   
   echo json_encode($rows);
 

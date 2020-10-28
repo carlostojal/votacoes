@@ -13,6 +13,7 @@
       <div id="area_listas" class="row">
       </div>
     </div>
+    <?php require("./footer.php") ?>
     <script>
 
       function onVote(lista) {
@@ -25,6 +26,9 @@
         $("#spinner").remove();
 
         const listas = JSON.parse(data);
+
+        if(listas.length == 0)
+          $("#area_listas").append("Nenhuma lista.");
 
         listas.map((lista) => {
           $("#area_listas").append(`

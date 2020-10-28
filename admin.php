@@ -1,3 +1,8 @@
+<?php
+  
+  if(!isset($_SESSION['username']))
+    header("Location: login.php");
+?>
 <html>
   <head>
     <?php require("./head.php") ?>
@@ -5,7 +10,7 @@
   </head>
   <body>
     <?php require("./credits.php") ?>
-    <?php require("./navbar.php") ?>
+    <?php require("./navbar_admin.php") ?>
     <div class="jumbotron">
       <h1 class="display-4"> Listas AERBP</h1>
       <p class="lead">Portal de votação.</p>

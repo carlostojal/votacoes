@@ -1,12 +1,12 @@
 <?php
 
-  if(!isset($_POST["email"])) {
-    echo "EMAIL_NOT_PROVIDED";
+  if(!isset($_POST["boletim"])) {
+    echo "CODE_NOT_PROVIDED";
     exit();
   }
 
-  if(!isset($_POST["codigo"])) {
-    echo "CODE_NOT_PROVIDED";
+  if(!isset($_POST["codigo_confirmacao"])) {
+    echo "CONFIRMATION_CODE_NOT_PROVIDED";
     exit();
   }
 
@@ -15,38 +15,37 @@
     exit();
   }
 
-  $email = $_POST["email"];
-  $codigo = $_POST["codigo"];
+  $codigo = $_POST["boletim"];
+  $codigo_confirmacao = $_POST["codigo_confirmacao"];
   $lista = $_POST["lista"];
 
   require("./connection.php");
 
-  $sql = "SELECT * FROM Boletim WHERE email = ?";
+  $sql = "SELECT * FROM Boletim WHERE cod = ?";
   $stm = $conn->prepare($sql);
-  $stm->bind_param("s", $email);
+  $stm->bind_param("i", $codigo);
   $stm->execute();
 
   $result = $stm->get_result();
 
   if($result->num_rows == 0) {
-    echo "EMAIL_NOT_REGISTERED";
+    echo "NOT_REGISTERED";
     exit();
   } else {
 
     $row = $result->fetch_assoc();
 
-    // invalid ID
-    if($row["id"] != $codigo) {
-      echo "INVALID_CODE";
+    if($row["cod_confirmacao"] != $codigo_confirmacao) {
+      echo "WRONG_CONFIRMATION_CODE";
       exit();
     } else if($row["usado"]) {
       echo "ALREADY_VOTED";
       exit();
     } else {
 
-      $sql = "UPDATE Boletim SET usado = '1' WHERE id = ?";
+      $sql = "UPDATE Boletim SET usado = '1' WHERE cod = ?";
       $stm = $conn->prepare($sql);
-      $stm->bind_param("i", $row["id"]);
+      $stm->bind_param("i", $row["cod"]);
       $stm->execute();
 
       $sql = "UPDATE Lista SET n_votos = n_votos + 1 WHERE nome = ?";
