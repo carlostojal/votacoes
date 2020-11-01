@@ -89,6 +89,23 @@
       $("#boletim").val(localStorage.getItem("code"));
       $("#codigo").val(localStorage.getItem("confirmation_code"));
 
+      $.get("./api/config.json", (data) => {
+
+        let cause = null; 
+        let extra = null;
+
+        if(Date.now() < data.votes_start) {
+          cause = "too_early";
+          extra = data.votes_start;
+        } else if(Date.now() > data.votes_end) {
+          cause = "too_late";
+          extra = data.votes_end;
+        }
+
+        if(cause)
+          window.location.replace(`./not_available.php?cause=${cause}&extra=${extra}`);
+      });
+
       $.get("./api/getListas.php", (data) => {
 
         $("#listas").show();

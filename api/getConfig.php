@@ -1,10 +1,14 @@
 <?php
 
-  $file = fopen("./config.json", "r");
+  function getConfig() {
 
-  $contents = fread($file, filesize("./config.json"));
-  fclose($file);
+    $file = fopen("./config.json", "r");
 
-  $config = json_decode($contents);
-  echo json_encode($config);
+    $contents = fread($file, filesize("./config.json"));
+    fclose($file);
+
+    $config = json_decode($contents);
+    return $config;
+
+  }
 ?>

@@ -15,6 +15,22 @@
     exit();
   }
 
+  require("./getConfig.php");
+
+  $config = getConfig();
+
+  $date = new DateTime();
+
+  if($date->getTimestamp() * 1000 < $config->votes_start) {
+    echo "TOO_EARLY";
+    exit();
+  }
+
+  if($date->getTimestamp() * 1000 > $config->votes_end) {
+    echo "TOO_LATE";
+    exit();
+  }
+
   $codigo = $_POST["boletim"];
   $codigo_confirmacao = $_POST["codigo_confirmacao"];
   $lista = $_POST["lista"];

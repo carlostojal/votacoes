@@ -1,11 +1,26 @@
 <?php
 
+  require("./getConfig.php");
+
+  $config = getConfig();
+
   session_start();
 
   if(!isset($_SESSION["username"])) {
-    echo "NOT_ALLOWED";
-    exit();
+
+    if($config->stats_public == "true") {
+      $date = new DateTime();
+
+      if($date->getTimestamp() < $config->votes_end) {
+        echo "TOO_EARLY";
+        exit();
+      }
+    } else {
+      echo "NOT_ALLOWED";
+      exit();
+    }
   }
+
 
   require("./connection.php");
 
