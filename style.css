@@ -1,0 +1,8 @@
+
+.lista {
+  transform: scale(1)
+}
+
+.lista:hover {
+  transform: scale(10),
+}

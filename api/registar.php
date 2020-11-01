@@ -14,6 +14,8 @@
   $ip = $_SERVER["REMOTE_ADDR"];
 
   $email = $process_number."@ead-aerbp.pt";
+  $email = strtolower($email);
+  $enc_email = md5($email);
 
   require("./connection.php");
   require("./sendCode.php");
@@ -21,7 +23,7 @@
   // check if already exists
   $sql = "SELECT cod, cod_confirmacao, usado FROM Boletim WHERE email = ?";
   $stm = $conn->prepare($sql);
-  $stm->bind_param("s", $email);
+  $stm->bind_param("s", $enc_email);
   $stm->execute();
 
   $result = $stm->get_result();
@@ -54,13 +56,13 @@
   // register
   $sql = "INSERT INTO Boletim (cod_confirmacao, email, endereco_ip) VALUES (?, ?, ?)";
   $stm = $conn->prepare($sql);
-  $stm->bind_param("iss", $cod_confirmacao, $email, $ip);
+  $stm->bind_param("iss", $cod_confirmacao, $enc_email, $ip);
   $stm->execute();
 
   // get code
   $sql = "SELECT cod FROM Boletim WHERE email = ?";
   $stm = $conn->prepare($sql);
-  $stm->bind_param("s", $email);
+  $stm->bind_param("s", $enc_email);
   $stm->execute();
 
   $result = $stm->get_result();

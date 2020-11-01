@@ -1,0 +1,15 @@
+{
+  "name": "Eleiçoes AERBP",
+  "short_name": "EleiçoesAERBP",
+  "start_url": "index.php",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./img/ballot-box.jpg",
+      "type": "image/jpeg", "sizes": "2800x2800"
+    }
+  ]
+}

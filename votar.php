@@ -19,7 +19,7 @@
             </h5>
           </div>
 
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
               <div class="form-group">
                 <label for="process_number">Nº de Processo</label>
@@ -45,7 +45,7 @@
             </h5>
           </div>
 
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
               <div class="form-group">
                 <label for="boletim">Nº de Boletim</label>
@@ -58,11 +58,11 @@
                 <small class="form-text text-muted">Este número foi também enviado para o email institucional.</small>
               </div>
               <div class="form-group">
-                <label for="lista">Lista</label>
+                <label for="listas">Lista</label>
                 <div id="listas_spinner" class="spinner-border" role="status">
                   <span class="sr-only">Carregando...</span>
                 </div>
-                <select id="listas" class="form-control"></select>
+                <div id="listas"></div>
               </div>
               <p class="text-muted">Apesar de estes dados serem pedidos, os boletins não
               são associados aos votos, pelo que os mesmos são anónimos.
@@ -98,7 +98,12 @@
 
         listas.map((lista) => {
           $("#listas").append(`
-            <option ${lista.nome == localStorage.getItem("lista") ? "selected" : ""}>${lista.nome}</option>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="lista${lista.id}" name="lista" value="${lista.id}" ${localStorage.getItem("lista") == lista.id ? "checked" : ""}/>
+              <label class="form-check-label" for="lista${lista.id}" id="labelLista${lista.id}">
+                ${lista.nome}
+              </label>
+            </div>
           `);
         });
 
@@ -116,8 +121,20 @@
         localStorage.setItem("confirmation_code", $("#codigo").val());
       });
 
-      $("#listas").on("change", () => {
-        localStorage.setItem("lista", $("#listas :selected").text());
+      $("#listas").on("change", (e) => {
+      console.log(e.target.value);
+      console.log(e);
+        const listaSelecionada = localStorage.getItem("lista");
+        if(e.target.value == listaSelecionada) { // unselected
+          $(`#lista${e.target.value}`).prop("checked", false);
+        } else {
+          $(`#lista${listaSelecionada}`).prop("checked", false);
+          $(`#lista${e.target.value}`).prop("checked", true);
+        }
+        const novaLista = $("input[name='lista']:checked").val();
+        const nomeNovaLista = $(`#labelLista${novaLista}`).text();
+        localStorage.setItem("lista", novaLista || null);
+        localStorage.setItem("nomeLista", nomeNovaLista);
       });
 
 
@@ -154,13 +171,16 @@
 
       $("#vote").click(() => {
 
-        const process_number = $("#process_number").val();
-        const boletim = $("#boletim").val();
-        const codigo_confirmacao = $("#codigo").val();
-        const lista = $("#listas :selected").text();
+        const process_number = localStorage.getItem("process_number");
+        const boletim = localStorage.getItem("code");
+        const codigo_confirmacao = localStorage.getItem("confirmation_code");
+        const lista = localStorage.getItem("lista");
+        let nomeLista = localStorage.getItem("nomeLista");
+        if(!lista)
+          nomeLista = "Voto Branco";
 
         alertify.confirm("Confirmar voto", `O aluno com nº de processo <b>${process_number}</b> e nº de boletim
-          <b>${boletim}</b> irá registar o seu voto na lista <b>${lista}<b>.<br><br><b>Confirma?<b>`, () => {
+          <b>${boletim}</b> irá registar o seu voto em <b>${nomeLista}<b>.<br><br><b>Confirma?<b>`, () => {
 
             $("#vote_text").hide();
             $("#vote_spinner").show();

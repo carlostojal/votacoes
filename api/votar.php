@@ -43,14 +43,25 @@
       exit();
     } else {
 
+      $sql = "SELECT id FROM Lista WHERE id = ?";
+      $stm = $conn->prepare($sql);
+      $stm->bind_param("i", $lista);
+      $stm->execute();
+
+      $res = $stm->get_result();
+      if($res->num_rows == 0 && $lista != "null") {
+        echo "INVALID_LIST";
+        exit();
+      }
+
       $sql = "UPDATE Boletim SET usado = '1' WHERE cod = ?";
       $stm = $conn->prepare($sql);
       $stm->bind_param("i", $row["cod"]);
       $stm->execute();
 
-      $sql = "UPDATE Lista SET n_votos = n_votos + 1 WHERE nome = ?";
+      $sql = "UPDATE Lista SET n_votos = n_votos + 1 WHERE id = ?";
       $stm = $conn->prepare($sql);
-      $stm->bind_param("s", $lista);
+      $stm->bind_param("i", $lista);
       $stm->execute();
 
       echo "OK";

@@ -15,7 +15,7 @@
   </head>
   <body>
     <?php require("./credits.php") ?>
-    <?php require("./navbar_admin.php") ?>
+    <?php require("./navbar.php") ?>
     <div class="jumbotron">
       <h1 id="winner" class="display-4">Carregando vencedor...</h1>
       <p id="winner_votes" class="lead">Carregando nº de votos...</p>

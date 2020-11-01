@@ -21,7 +21,7 @@
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
 
-      $mail->setFrom("votacoes.aerbp@gmail.com");
+      $mail->setFrom("votacoes.aerbp@gmail.com", "Eleicoes AERBP");
       $mail->isHTML(true);
       $mail->addAddress($email);
       $mail->Subject = "Boletim de Voto - AERBP";
