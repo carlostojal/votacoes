@@ -1,6 +1,7 @@
 <?php
 
   require("./connection.php");
+  require("./cors.php");
 
   $sql = "SELECT id, nome, descricao, imagem FROM Lista";
   $result = $conn->query($sql);
