@@ -18,6 +18,7 @@ export default function Listas() {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
+  // get lists from backend on first render
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/getListas.php`)
       .then(res => res.json())
@@ -29,6 +30,7 @@ export default function Listas() {
       });
   }, []);
 
+  // when a vote button is pressed, navigate to the vote screen
   const onVotar = (lista) => {
     localStorage.setItem("lista", JSON.stringify(lista));
     history.push("/votar");
