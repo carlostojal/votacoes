@@ -52,14 +52,16 @@ export default function Votar() {
 
   // get lists from backend (only when config was already loaded, to avoid unneccessary requests on the client)
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/getListas.php`)
-      .then(res => res.json())
-      .then((result) => {
-        setListas(result);
-        setLoadingListas(false);
-      }, (error) => {
-        alertify.error("Ocorreu um erro inesperado.");
-      });
+    if(isAllowed) {
+      fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/getListas.php`)
+        .then(res => res.json())
+        .then((result) => {
+          setListas(result);
+          setLoadingListas(false);
+        }, (error) => {
+          alertify.error("Ocorreu um erro inesperado.");
+        });
+    }
   }, [isAllowed]);
 
   // when selected list is changed
