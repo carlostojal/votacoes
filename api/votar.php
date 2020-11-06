@@ -1,5 +1,7 @@
 <?php
 
+  require("./cors.php");
+
   if(!isset($_POST["boletim"])) {
     echo "CODE_NOT_PROVIDED";
     exit();

@@ -48,6 +48,9 @@ export default function Votar() {
       case "codigoConfirmacao":
         setCodigoConfirmacao(value);
         break;
+      default:
+        setCodigoConfirmacao(null);
+        break;
     }
   }
 
@@ -128,8 +131,13 @@ export default function Votar() {
               )
             }
           </Form.Group>
-          <Button variant="primary" onClick={onVote}>
-            Votar
+          <Button variant="primary" onClick={onVote} disabled={loadingVoto}>
+            { loadingVoto &&
+              <Spinner animation="border" />
+            }
+            { !loadingVoto && 
+              <>Votar</>
+            }
           </Button>
         </Form>
       </Container>
