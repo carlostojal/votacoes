@@ -33,9 +33,7 @@ export default function Votar() {
 
   // get config on first render (will determine if voting is allowed or not)
   useEffect(() => {
-    const headers = new Headers();
-    headers.append("cache-control", "no-cache");
-    fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/config.json`, { headers })
+    fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/config.json`)
       .then(res => res.json())
       .then((result) => {
         // voting has not started yet

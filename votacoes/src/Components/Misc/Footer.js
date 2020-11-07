@@ -5,7 +5,7 @@ export default function Footer() {
     <Container fluid={true}>
       <p className="text-muted">
         Desenvolvido por Carlos Tojal em colaboração com a 
-        Comissão Eleitoral 2020-2021 &copy; 2020
+        Comissão Eleitoral 2020-2021 &copy; {new Date().getFullYear()}
       </p>
     </Container>
   );
