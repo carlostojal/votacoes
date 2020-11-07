@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 import MyNavbar from "../Misc/MyNavbar";
@@ -16,9 +16,11 @@ export default function Admin() {
   const [sessionLoading, setSessionLoading] = useState(true);
   const [isAllowed, setIsAllowed] = useState(false);
 
+  const history = useHistory();
+
   const onSessionCheck = (isLogged) => {
-    setSessionLoading(false);
     setIsAllowed(isLogged);
+    setSessionLoading(false);
   };
 
   return (
@@ -30,7 +32,7 @@ export default function Admin() {
           <Spinner animation="border" />
         }
         { !sessionLoading && !isAllowed &&
-          <Redirect to={"/login"} />
+          history.replace("/login")
         }
         { !sessionLoading && isAllowed &&
           <Row>

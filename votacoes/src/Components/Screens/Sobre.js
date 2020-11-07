@@ -28,12 +28,15 @@ export default function Sobre() {
         <h4>Frontend:</h4>
         <ul>
           <li>ReactJS</li>
-          <li>Bootstrap</li>
+          <li>React Bootstrap</li>
+          <li>AlertifyJS</li>
+          <li>Chart.js</li>
         </ul>
         <h4>Backend:</h4>
         <ul>
           <li>PHP</li>
           <li>MySQL</li>
+          <li>PHPMailer</li>
         </ul>
       </Container>
       <Footer />

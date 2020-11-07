@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.2.0",
     "alertifyjs": "^1.13.1",
     "bootstrap": "^4.5.3",
+    "chart.js": "^2.9.4",
     "dotenv": "^8.2.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",

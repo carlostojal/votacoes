@@ -3,6 +3,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import alertify from "alertifyjs";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 import MyNavbar from "../Misc/MyNavbar";
@@ -14,10 +16,39 @@ export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const history = useHistory();
+
   const onLogin = () => {
+
     setLoginLoading(true);
-    console.log(username);
-    console.log(password);
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+
+    fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/login.php`, {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    })
+      .then(res => res.text())
+      .then((result) => {
+        setLoginLoading(false);
+        switch(result) {
+          case "WRONG_CREDENTIALS":
+            alertify.warning("Credenciais erradas.");
+            break;
+          case "OK":
+            history.replace("/admin");
+            break;
+          default:
+            alertify.error("Ocorreu um erro.");
+            break;
+        }
+      }, (error) => {
+        alertify.error("Ocorreu um erro inesperado. Verifique a sua ligação à internet.");
+        setLoginLoading(false);
+      });
   }
 
   const onFieldChange = (value, type) => {

@@ -1,5 +1,8 @@
 <?php
 
+  require("./cors.php");
+  require("./ini_config.php");
+
   if(!$_POST["username"]) {
     echo "USERNAME_NOT_PROVIDED";
     exit();
