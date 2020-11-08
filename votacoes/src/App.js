@@ -16,6 +16,7 @@ import Login from "./Components/Screens/Login";
 import ListasAdmin from "./Components/Screens/ListasAdmin";
 import AdicionarLista from './Components/Screens/AdicionarLista';
 import Estatistica from "./Components/Screens/Estatistica";
+import Config from "./Components/Screens/Config";
 
 require("dotenv").config();
 
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/listas_admin" component={ListasAdmin} />
         <Route exact path="/adicionar_lista" component={AdicionarLista} />
         <Route exact path="/estatistica" component={Estatistica} />
+        <Route exact path="/config" component={Config} />
       </Switch>
     </Router>
   );

@@ -15,7 +15,7 @@ export default function Admin() {
           <b>Estatística:</b> Aqui encontram-se as estatísticas das votações.
         </li>
         <li>
-          <b>Configurações:</b> Aqui configura-se a data e hora de começo e fim das votações, assim como se as estatísticas deverão ficar publicamente visíveis no fim das mesmas.
+          <b>Configurações:</b> Aqui configura-se a data e hora de começo e fim das votações.
         </li>
       </ul>
     </AdminTemplate>
