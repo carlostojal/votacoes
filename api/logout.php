@@ -1,8 +1,15 @@
 <?php
 
-  session_start();
+  require("./ini_config.php");
+  require("./cors.php");
 
-  session_destroy();
+  try { 
+    session_start();
 
-  echo "OK";
+    session_destroy();
+
+    echo "OK";
+  } catch(Exception $e) {
+    echo "ERROR";
+  }
 ?>
