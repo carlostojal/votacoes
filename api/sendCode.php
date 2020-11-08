@@ -7,6 +7,8 @@
   require("../libs/phpmailer/src/PHPMailer.php");
   require("../libs/phpmailer/src/SMTP.php");
 
+  require("./constants.php");
+
   function sendCode($cod, $cod_confirmacao, $email) {
 
     try {
@@ -16,12 +18,12 @@
       $mail->isSMTP();
       $mail->Host = "smtp.gmail.com";
       $mail->SMTPAuth = true;
-      $mail->Username = "votacoes.aerbp@gmail.com";
-      $mail->Password = "@SafePassword123";
+      $mail->Username = VOTACOES_EMAIL;
+      $mail->Password = VOTACOES_PASSWORD;
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
 
-      $mail->setFrom("votacoes.aerbp@gmail.com", "Eleicoes AERBP");
+      $mail->setFrom(VOTACOES_EMAIL, "Eleições AERBP");
       $mail->isHTML(true);
       $mail->addAddress($email);
       $mail->Subject = "Boletim de Voto - AERBP";
