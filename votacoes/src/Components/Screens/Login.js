@@ -1,5 +1,3 @@
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -7,8 +5,7 @@ import alertify from "alertifyjs";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-import MyNavbar from "../Misc/MyNavbar";
-import Footer from "../Misc/Footer";
+import Template from "../Misc/Template";
 
 export default function Login() {
 
@@ -67,32 +64,25 @@ export default function Login() {
   }
 
   return (
-    <>
-      <MyNavbar />
-      <Jumbotron>
-        <h1 className="display-4">Início de Sessão</h1>
-      </Jumbotron>
-      <Container>
-        <Form>
-          <Form.Group>
-            <Form.Label>Nome de utilizador</Form.Label>
-            <Form.Control type="email" onChange={(e) => onFieldChange(e.target.value, "username")} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Palavra-passe</Form.Label>
-            <Form.Control type="password" onChange={(e) => onFieldChange(e.target.value, "password")} />
-          </Form.Group>
-          <Button variant="primary" disabled={loginLoading} onClick={onLogin}>
-            { loginLoading &&
-              <Spinner animation="border" />
-            }
-            { !loginLoading &&
-              <>Iniciar Sessão</>
-            }
-          </Button>
-        </Form>
-      </Container>
-      <Footer />
-    </>
+    <Template title="Início de Sessão" description="Área administrativa">
+      <Form>
+        <Form.Group>
+          <Form.Label>Nome de utilizador</Form.Label>
+          <Form.Control type="email" onChange={(e) => onFieldChange(e.target.value, "username")} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Palavra-passe</Form.Label>
+          <Form.Control type="password" onChange={(e) => onFieldChange(e.target.value, "password")} />
+        </Form.Group>
+        <Button variant="primary" disabled={loginLoading} onClick={onLogin}>
+          { loginLoading &&
+            <Spinner animation="border" />
+          }
+          { !loginLoading &&
+            <>Iniciar Sessão</>
+          }
+        </Button>
+      </Form>
+    </Template>
   );
 }

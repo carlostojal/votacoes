@@ -1,13 +1,10 @@
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import alertify from "alertifyjs";
 import { useHistory } from "react-router-dom";
 
-import MyNavbar from "../Misc/MyNavbar";
-import Footer from "../Misc/Footer";
+import Template from "../Misc/Template";
 
 import {useEffect, useState} from "react";
 
@@ -134,54 +131,47 @@ export default function Votar() {
   }
 
   return (
-    <>
-      <MyNavbar />
-      <Jumbotron>
-          <h1 className="display-4">Votar</h1>
-      </Jumbotron>
-      <Container>
-        { isAllowedLoading &&
-          <Spinner animation="border" />
-        }
-        { !isAllowedLoading && isAllowed &&
-          <Form>
-            <Form.Group>
-              <Form.Label>Nº de Boletim</Form.Label>
-              <Form.Control type="number" onChange={(e) => onFieldChange(e.target.value, "nBoletim")} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Código de confirmação</Form.Label>
-              <Form.Control type="number" onChange={(e) => onFieldChange(e.target.value, "codigoConfirmacao")} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Voto</Form.Label>
-              { loadingListas &&
-                <Spinner animation="border" />
-              }
-              { !loadingListas &&
-                listas.map((listaAtual) =>
-                  <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={lista.id === listaAtual.id} onChange={() => onListaChange(listaAtual)} />
-                )
-              }
-            </Form.Group>
-            <Button variant="primary" onClick={onVote} disabled={loadingVoto}>
-              { loadingVoto &&
-                <Spinner animation="border" />
-              }
-              { !loadingVoto && 
-                <>Votar</>
-              }
-            </Button>
-          </Form>
-        }
-        { !isAllowedLoading && !isAllowed &&
-          history.push({
-            pathname: "/nao_permitido",
-            cause: notAllowedCause
-          })
-        }
-      </Container>
-      <Footer />
-    </>
+    <Template title="Votar">
+      { isAllowedLoading &&
+        <Spinner animation="border" />
+      }
+      { !isAllowedLoading && isAllowed &&
+        <Form>
+          <Form.Group>
+            <Form.Label>Nº de Boletim</Form.Label>
+            <Form.Control type="number" onChange={(e) => onFieldChange(e.target.value, "nBoletim")} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Código de confirmação</Form.Label>
+            <Form.Control type="number" onChange={(e) => onFieldChange(e.target.value, "codigoConfirmacao")} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Voto</Form.Label>
+            { loadingListas &&
+              <Spinner animation="border" />
+            }
+            { !loadingListas &&
+              listas.map((listaAtual) =>
+                <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={lista.id === listaAtual.id} onChange={() => onListaChange(listaAtual)} />
+              )
+            }
+          </Form.Group>
+          <Button variant="primary" onClick={onVote} disabled={loadingVoto}>
+            { loadingVoto &&
+              <Spinner animation="border" />
+            }
+            { !loadingVoto && 
+              <>Votar</>
+            }
+          </Button>
+        </Form>
+      }
+      { !isAllowedLoading && !isAllowed &&
+        history.push({
+          pathname: "/nao_permitido",
+          cause: notAllowedCause
+        })
+      }
+    </Template>
   );
 }
