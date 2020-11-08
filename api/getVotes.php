@@ -1,41 +1,51 @@
 <?php
 
-  require("./getConfig.php");
+  try {
 
-  $config = getConfig();
+    require("./ini_config.php");
+    require("./cors.php");
 
-  session_start();
+    require("./getConfig.php");
 
-  if(!isset($_SESSION["username"])) {
+    $config = getConfig();
 
-    if($config->stats_public == "true") {
-      $date = new DateTime();
+    session_start();
 
-      if($date->getTimestamp() < $config->votes_end) {
-        echo "TOO_EARLY";
+    if(!isset($_SESSION["username"])) {
+
+      if($config->stats_public == "true") {
+        $date = new DateTime();
+
+        if($date->getTimestamp() < $config->votes_end) {
+          echo "TOO_EARLY";
+          exit();
+        }
+      } else {
+        echo "NOT_ALLOWED";
         exit();
       }
-    } else {
-      echo "NOT_ALLOWED";
-      exit();
     }
+
+
+    require("./connection.php");
+
+    $sql = "SELECT id, nome, n_votos FROM Lista";
+    $result = $conn->query($sql);
+
+    $rows = array();
+
+    while($row = $result->fetch_assoc())
+      $rows[] = $row;
+
+    // get empty votes
+    $sql = "SELECT COUNT(Boletim.cod) - SUM(Lista.n_votos) AS votos_brancos FROM Boletim JOIN Lista WHERE Boletim.usado = '1'";
+    
+    echo json_encode($rows);
+
+    $conn->close();
+
+  } catch(Exception $e) {
+    echo "ERROR";
+    exit();
   }
-
-
-  require("./connection.php");
-
-  $sql = "SELECT id, nome, n_votos FROM Lista";
-  $result = $conn->query($sql);
-
-  $rows = array();
-
-  while($row = $result->fetch_assoc())
-    $rows[] = $row;
-
-  // get empty votes
-  $sql = "SELECT COUNT(Boletim.cod) - SUM(Lista.n_votos) AS votos_brancos FROM Boletim JOIN Lista WHERE Boletim.usado = '1'";
-  
-  echo json_encode($rows);
-
-  $conn->close();
 ?>
