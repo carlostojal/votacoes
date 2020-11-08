@@ -14,6 +14,7 @@ import Sobre from "./Components/Screens/Sobre";
 import Admin from "./Components/Screens/Admin";
 import Login from "./Components/Screens/Login";
 import ListasAdmin from "./Components/Screens/ListasAdmin";
+import AdicionarLista from './Components/Screens/AdicionarLista';
 
 require("dotenv").config();
 
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/listas_admin" component={ListasAdmin} />
+        <Route exact path="/adicionar_lista" component={AdicionarLista} />
       </Switch>
     </Router>
   );

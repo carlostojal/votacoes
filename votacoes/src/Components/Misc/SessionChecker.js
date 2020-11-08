@@ -12,7 +12,7 @@ export default function SessionChecker(props) {
         result === "TRUE" ? returnVal = true : returnVal = false;
         props.onCheck(returnVal);
       });
-  }, [props]);
+  }, []);
 
   return null;
 }

@@ -35,7 +35,8 @@
     $data = $result->fetch_assoc();
 
     // delete image
-    unlink("../".$data["imagem"]);
+    if($data["imagem"])
+      unlink("../".$data["imagem"]);
 
     // delete from database
     $sql = "DELETE FROM Lista WHERE id = ?";

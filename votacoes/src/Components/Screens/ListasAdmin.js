@@ -1,6 +1,7 @@
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import alertify from "alertifyjs";
 import { useEffect, useState } from "react";
 
@@ -77,7 +78,7 @@ export default function ListasAdmin() {
 
   return (
     <AdminTemplate title="Listas">
-      <Button variant="primary">Adicionar Lista</Button>
+      <Button variant="primary" as={Link} to={"/adicionar_lista"}>Adicionar Lista</Button>
       { listasLoading &&
         <Spinner animation="border" />
       }
@@ -100,7 +101,14 @@ export default function ListasAdmin() {
                     <td>{lista.nome}</td>
                     <td>{lista.descricao}</td>
                     <td>
-                      <Button variant="danger" onClick={() => onDelete(lista.id)}>Eliminar</Button>
+                      <Button variant="danger" onClick={() => onDelete(lista.id)} disabled={listaDeleteLoading}>
+                        { listaDeleteLoading &&
+                          <Spinner animation="border" />
+                        }
+                        { !listaDeleteLoading &&
+                          <>Eliminar</>
+                        }
+                      </Button>
                     </td>
                   </tr>
                 );

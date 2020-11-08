@@ -43,7 +43,9 @@ export default function Listas() {
           {listas.map((lista) => 
             <Col key={lista.id}>
               <Card style={{width: "18rem"}}>
-                <Card.Img variant="top" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${lista.imagem}`} />
+                { lista.imagem &&
+                  <Card.Img variant="top" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${lista.imagem}`} />
+                }
                 <Card.Body>
                   <Card.Title>{lista.nome}</Card.Title>
                   <Card.Text>{lista.descricao}</Card.Text>
