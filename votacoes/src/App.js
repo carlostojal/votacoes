@@ -13,6 +13,7 @@ import NaoPermitido from "./Components/Screens/NaoPermitido";
 import Sobre from "./Components/Screens/Sobre";
 import Admin from "./Components/Screens/Admin";
 import Login from "./Components/Screens/Login";
+import ListasAdmin from "./Components/Screens/ListasAdmin";
 
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/sobre" component={Sobre} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/listas_admin" component={ListasAdmin} />
       </Switch>
     </Router>
   );
