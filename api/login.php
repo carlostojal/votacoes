@@ -16,6 +16,7 @@
 
   $user = $_POST["username"];
   $pass = $_POST["password"];
+  $pass = md5($pass);
 
   require("./connection.php");
 
