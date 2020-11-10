@@ -14,6 +14,7 @@ export default function Votar() {
   const [isAllowedLoading, setIsAllowedLoading] = useState(true);
   const [notAllowedCause, setNotAllowedCause] = useState(null);
   const [lista, setLista] = useState(null);
+  const [nomeLista, setNomeLista] = useState(null);
   const [listas, setListas] = useState(null);
   const [loadingListas, setLoadingListas] = useState(true);
   const [loadingVoto, setLoadingVoto] = useState(false);
@@ -60,9 +61,14 @@ export default function Votar() {
   }, [isAllowed]);
 
   // when selected list is changed
-  const onListaChange = (listaSelecionada) => {
+  const onListaChange = (listaSelecionada, nomeListaSelecionada) => {
+    if(listaSelecionada === lista) {
+      listaSelecionada = null;
+      nomeListaSelecionada = null;
+    }
     setLista(listaSelecionada);
-    localStorage.setItem("lista", JSON.stringify(listaSelecionada));
+    setNomeLista(nomeListaSelecionada);
+    localStorage.setItem("lista", listaSelecionada);
   }
 
   // when some field is changed (type indicates which field was changed)
@@ -89,7 +95,7 @@ export default function Votar() {
       <b>Código de Confirmação:</b><br>
       ${codigoConfirmacao}<br><br>
       <b>Lista:</b><br>
-      ${lista.nome}
+      ${nomeLista || "(Voto branco)"}
     `, () => { // vote was confirmed
       setLoadingVoto(true);
       // create the form
@@ -116,7 +122,7 @@ export default function Votar() {
             alertify.warning("Já votou.");
             break;
           case "OK":
-            alertify.message("Sucesso", "Voto registado com sucesso.");
+            alertify.success("Sucesso", "Voto registado com sucesso.");
             break;
           default:
             alertify.error("Ocorreu um erro.");
@@ -152,7 +158,7 @@ export default function Votar() {
             }
             { !loadingListas &&
               listas.map((listaAtual) =>
-                <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={lista.id === listaAtual.id} onChange={() => onListaChange(listaAtual)} />
+                <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={lista === listaAtual.id} onChange={() => onListaChange(listaAtual.id, listaAtual.nome)} />
               )
             }
           </Form.Group>
