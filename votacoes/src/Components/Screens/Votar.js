@@ -26,7 +26,7 @@ export default function Votar() {
 
   // get selected list from local storage on first render
   useEffect(() => {
-    setLista(JSON.parse(localStorage.getItem("lista")));
+    setLista(localStorage.getItem("lista"));
   }, []);
 
   // get config on first render (will determine if voting is allowed or not)

@@ -13,10 +13,6 @@ export default function Config() {
   const [configSaveLoading, setConfigSaveLoading] = useState(false);
   const [votesStart, setVotesStart] = useState(new Date());
   const [votesEnd, setVotesEnd] = useState(new Date());
-  const [config, setConfig] = useState({
-    votes_start: Date.now(),
-    votes_end: Date.now()
-  });
 
   useEffect(() => {
     if(shouldLoadConfig) {
@@ -26,7 +22,6 @@ export default function Config() {
           setConfigLoading(false);
           try {
             result = JSON.parse(result);
-            setConfig(result);
             setVotesStart(new Date(parseInt(result.votes_start)));
             setVotesEnd(new Date(parseInt(result.votes_end)));
           } catch(e) {

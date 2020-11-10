@@ -1,17 +1,28 @@
 <?php
 
   try {
-    if(!isset($_POST["process"])) {
-      echo "PROCESS_NUMBER_NOT_PROVIDED";
+
+    require("./ini_config.php");
+    require("./cors.php");
+
+    session_start();
+
+    if(!isset($_SESSION["username"])) {
+      echo "NOT_ALLOWED";
       exit();
     }
 
-    $process = $_POST["process"];
+    if(!isset($_POST["email"])) {
+      echo "EMAIL_NOT_PROVIDED";
+      exit();
+    }
+
+    $email = $_POST["email"];
 
     require("./connection.php");
 
-    $sql = "SELECT cod, cod_confirmacao FROM Boletim WHERE email = ?";
-    $email = trim(strtolower($process))."@ead-aerbp.pt";
+    $sql = "SELECT cod, cod_confirmacao, usado FROM Boletim WHERE email = ?";
+    $email = trim(strtolower($email));
     $email = md5($email);
     $stm = $conn->prepare($sql);
     $stm->bind_param("s", $email);
@@ -19,7 +30,7 @@
 
     $result = $stm->get_result();
     if($result->num_rows == 0) {
-      echo "PROCESS_NUMBER_DOES_NOT_EXIST";
+      echo "EMAIL_DOES_NOT_EXIST";
       exit();
     }
 

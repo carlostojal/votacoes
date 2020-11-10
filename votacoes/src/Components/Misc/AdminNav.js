@@ -32,6 +32,7 @@ export default function AdminNav() {
       <Nav.Link as={Link} to="/estatistica">Estatística</Nav.Link>
       <Nav.Link as={Link} to="/config">Configurações</Nav.Link>
       <Nav.Link as={Link} to="/registar_utilizador">Registar Utilizador</Nav.Link>
+      <Nav.Link as={Link} to="/consultar_boletim">Consultar Boletim</Nav.Link>
       <Nav.Link onClick={onLogout}>
         Terminar Sessão
         { logoutLoading &&
