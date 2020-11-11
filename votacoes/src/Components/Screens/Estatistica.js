@@ -120,6 +120,7 @@ export default function Estatistica() {
       { !votosLoading &&
         <>
           <Button onClick={() => setShouldLoadVotes(true)}>Recarregar</Button>
+          <h2>Votos por Lista</h2>
           <Pie data={votesData} />
           <Table responsive>
             <thead>
@@ -155,7 +156,10 @@ export default function Estatistica() {
             <Spinner animation="border" />
           }
           { !votosPorHoraLoading &&
-            <Bar data={votesByHour}/>
+            <>
+              <h2>Votos por hora</h2>
+              <Bar data={votesByHour}/>
+            </>
           }
         </>
       }
