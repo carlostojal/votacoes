@@ -29,16 +29,13 @@
 
     require("./connection.php");
 
-    $sql = "SELECT id, nome, n_votos FROM Lista";
+    $sql = "SELECT Lista.id, Lista.nome, COUNT(*) AS n_votos FROM Voto LEFT JOIN Lista ON Voto.lista = Lista.id GROUP BY Voto.lista ORDER BY n_votos DESC";
     $result = $conn->query($sql);
 
     $rows = array();
 
     while($row = $result->fetch_assoc())
       $rows[] = $row;
-
-    // get empty votes
-    $sql = "SELECT COUNT(Boletim.cod) - SUM(Lista.n_votos) AS votos_brancos FROM Boletim JOIN Lista WHERE Boletim.usado = '1'";
     
     echo json_encode($rows);
 

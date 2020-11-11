@@ -8,13 +8,12 @@ import Template from "../Misc/Template";
 
 import {useEffect, useState} from "react";
 
-export default function Votar() {
+export default function Votar(props) {
 
   const [isAllowed, setIsAllowed] = useState(false);
   const [isAllowedLoading, setIsAllowedLoading] = useState(true);
   const [notAllowedCause, setNotAllowedCause] = useState(null);
-  const [lista, setLista] = useState(null);
-  const [nomeLista, setNomeLista] = useState(null);
+  const [lista, setLista] = useState({});
   const [listas, setListas] = useState(null);
   const [loadingListas, setLoadingListas] = useState(true);
   const [loadingVoto, setLoadingVoto] = useState(false);
@@ -24,9 +23,12 @@ export default function Votar() {
 
   const history = useHistory();
 
-  // get selected list from local storage on first render
+  // get selected list from history props on first render
   useEffect(() => {
-    setLista(localStorage.getItem("lista"));
+    if(props.location.state && props.location.state.lista)
+      setLista(props.location.state.lista);
+    else
+      setLista({});
   }, []);
 
   // get config on first render (will determine if voting is allowed or not)
@@ -61,14 +63,13 @@ export default function Votar() {
   }, [isAllowed]);
 
   // when selected list is changed
-  const onListaChange = (listaSelecionada, nomeListaSelecionada) => {
-    if(listaSelecionada === lista) {
-      listaSelecionada = null;
-      nomeListaSelecionada = null;
+  const onListaChange = (listaSelecionada) => {
+    if(lista) {
+      if(listaSelecionada.id === lista.id) {
+        listaSelecionada = {};
+      }
     }
     setLista(listaSelecionada);
-    setNomeLista(nomeListaSelecionada);
-    localStorage.setItem("lista", listaSelecionada);
   }
 
   // when some field is changed (type indicates which field was changed)
@@ -88,6 +89,14 @@ export default function Votar() {
 
   // when vote button is pressed
   const onVote = () => {
+    if(!nBoletim || nBoletim === "") {
+      alertify.warning("Não foi fornecido um nº de boletim.");
+      return;
+    }
+    if(!codigoConfirmacao || codigoConfirmacao === "") {
+      alertify.warning("Não foi fornecido um código de confirmação.");
+      return;
+    }
     // alert to confirm vote
     alertify.confirm("Confirmar voto", `
       <b>Nº de Boletim:</b><br>
@@ -95,14 +104,14 @@ export default function Votar() {
       <b>Código de Confirmação:</b><br>
       ${codigoConfirmacao}<br><br>
       <b>Lista:</b><br>
-      ${nomeLista || "(Voto branco)"}
+      ${lista.nome || "(Voto branco)"}
     `, () => { // vote was confirmed
       setLoadingVoto(true);
       // create the form
       let formData = new FormData();
       formData.append("boletim", nBoletim);
       formData.append("codigo_confirmacao", codigoConfirmacao);
-      formData.append("lista", lista);
+      formData.append("lista", lista.id || null);
       // register the vote
       fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/votar.php`, {
         method: "POST",
@@ -157,9 +166,14 @@ export default function Votar() {
               <Spinner animation="border" />
             }
             { !loadingListas &&
-              listas.map((listaAtual) =>
-                <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={lista === listaAtual.id} onChange={() => onListaChange(listaAtual.id, listaAtual.nome)} />
-              )
+              listas.map((listaAtual) => {
+                let selected = false;
+                if(lista && lista.id) {
+                  if(lista.id == listaAtual.id)
+                    selected = true;
+                }
+                return <Form.Check key={listaAtual.id} type="checkbox" label={listaAtual.nome} checked={selected} onChange={() => onListaChange(listaAtual)} />
+              })
             }
           </Form.Group>
           <Button variant="primary" onClick={onVote} disabled={loadingVoto}>

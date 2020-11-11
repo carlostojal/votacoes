@@ -29,8 +29,12 @@ export default function Listas() {
 
   // when a vote button is pressed, navigate to the vote screen
   const onVotar = (lista) => {
-    localStorage.setItem("lista", lista.id);
-    history.push("/votar");
+    history.push({
+      pathname: "/votar", 
+      state: {
+        lista
+      }
+    });
   }
   
   return (
