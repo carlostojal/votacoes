@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function MyNavbar() {
  return (
   <Navbar expand="lg" className="bg-light sticky-top">
-    <Navbar.Brand as={Link} to={"/"}>Eleições</Navbar.Brand>
+    <Navbar.Brand as={Link} to={"/"}>Eleição AE</Navbar.Brand>
     <Navbar.Toggle />
     <Navbar.Collapse>
       <Nav className="mr-auto">

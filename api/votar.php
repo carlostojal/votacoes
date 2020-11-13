@@ -89,11 +89,6 @@
         $stm->bind_param("i", $lista);
         $stm->execute();
 
-        $sql = "UPDATE Lista SET n_votos = n_votos + 1 WHERE id = ?";
-        $stm = $conn->prepare($sql);
-        $stm->bind_param("i", $lista);
-        $stm->execute();
-
         echo "OK";
       }
     }

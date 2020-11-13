@@ -1,4 +1,7 @@
 <?php
-  header("Access-Control-Allow-Origin: http://192.168.1.66:3000");
+
+  require("./constants.php");
+
+  header("Access-Control-Allow-Origin: ".VOTACOES_FRONTEND);
   header("Access-Control-Allow-Credentials: true");
 ?>
