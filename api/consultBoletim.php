@@ -28,15 +28,23 @@
     $stm->bind_param("s", $email);
     $stm->execute();
 
-    $result = $stm->get_result();
-    if($result->num_rows == 0) {
+    $stm->store_result();
+
+    $stm->bind_result($cod, $cod_confirmacao, $usado);
+
+    if($stm->num_rows == 0) {
       echo "EMAIL_DOES_NOT_EXIST";
       exit();
     }
 
-    $data = $result->fetch_assoc();
+    while($stm->fetch()) {
+      $object = new stdClass();
+      $object->cod = $cod;
+      $object->cod_confirmacao = $cod_confirmacao;
+      $object->usado = $usado;
+    }
 
-    echo json_encode($data);
+    echo json_encode($object);
   } catch(Exception $e) {
     echo "ERROR";
   }

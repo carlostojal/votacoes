@@ -26,9 +26,9 @@
   $stm->bind_param("ss", $user, $pass);
   $stm->execute();
 
-  $result = $stm->get_result();
+  $stm->store_result();
 
-  if($result->num_rows == 0) {
+  if($stm->num_rows == 0) {
     echo "WRONG_CREDENTIALS";
     exit();
   }

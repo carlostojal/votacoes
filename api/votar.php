@@ -46,50 +46,53 @@
 
     require("./connection.php");
 
-    $sql = "SELECT * FROM Boletim WHERE cod = ?";
+    $sql = "SELECT cod, cod_confirmacao, usado FROM Boletim WHERE cod = ?";
     $stm = $conn->prepare($sql);
     $stm->bind_param("i", $codigo);
     $stm->execute();
 
-    $result = $stm->get_result();
+    $stm->store_result();
 
-    if($result->num_rows == 0) {
+    $stm->bind_result($cod, $cod_confirmacao, $usado);
+
+    if($stm->num_rows == 0) {
       echo "NOT_REGISTERED";
       exit();
     } else {
 
-      $row = $result->fetch_assoc();
-
-      if($row["cod_confirmacao"] != $codigo_confirmacao) {
-        echo "WRONG_CONFIRMATION_CODE";
-        exit();
-      } else if($row["usado"]) {
-        echo "ALREADY_VOTED";
-        exit();
-      } else {
-
-        $sql = "SELECT id FROM Lista WHERE id = ?";
-        $stm = $conn->prepare($sql);
-        $stm->bind_param("i", $lista);
-        $stm->execute();
-
-        $res = $stm->get_result();
-        if($res->num_rows == 0 && $lista != NULL) {
-          echo "INVALID_LIST";
+      while($stm->fetch()) {
+        if($cod_confirmacao != $codigo_confirmacao) {
+          echo "WRONG_CONFIRMATION_CODE";
           exit();
+        } else if($usado) {
+          echo "ALREADY_VOTED";
+          exit();
+        } else {
+
+          $sql = "SELECT id FROM Lista WHERE id = ?";
+          $stm = $conn->prepare($sql);
+          $stm->bind_param("i", $lista);
+          $stm->execute();
+
+          $stm->store_result();
+
+          if($stm->num_rows == 0 && $lista != NULL) {
+            echo "INVALID_LIST";
+            exit();
+          }
+
+          $sql = "UPDATE Boletim SET usado = '1' WHERE cod = ?";
+          $stm = $conn->prepare($sql);
+          $stm->bind_param("i", $codigo);
+          $stm->execute();
+
+          $sql = "INSERT INTO Voto (lista) VALUES (?)";
+          $stm = $conn->prepare($sql);
+          $stm->bind_param("i", $lista);
+          $stm->execute();
+
+          echo "OK";
         }
-
-        $sql = "UPDATE Boletim SET usado = '1' WHERE cod = ?";
-        $stm = $conn->prepare($sql);
-        $stm->bind_param("i", $row["cod"]);
-        $stm->execute();
-
-        $sql = "INSERT INTO Voto (lista) VALUES (?)";
-        $stm = $conn->prepare($sql);
-        $stm->bind_param("i", $lista);
-        $stm->execute();
-
-        echo "OK";
       }
     }
 

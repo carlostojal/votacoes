@@ -83,7 +83,7 @@
         }
 
         // get code
-        $sql = "SELECT cod FROM Boletim WHERE email = ?";
+        $sql = "SELECT cod, cod_confirmacao FROM Boletim WHERE email = ?";
         $stm = $conn->prepare($sql);
         $stm->bind_param("s", $enc_email);
         $stm->execute();
@@ -92,6 +92,7 @@
 
         $row = $result->fetch_assoc();
         $cod = $row["cod"];
+        $cod_confirmacao = $row["cod_confirmacao"];
 
         // send email
         $mail->addAddress($email);
