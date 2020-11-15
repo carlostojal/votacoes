@@ -17,6 +17,12 @@ export default function Admin() {
         <li>
           <b>Configurações:</b> Aqui configura-se a data e hora de começo e fim das votações.
         </li>
+        <li>
+          <b>Registar Utilizador:</b> Aqui regista-se um novo utilizador administrador.
+        </li>
+        <li>
+          <b>Consultar Boletim:</b> Aqui é possível consultar o nº de boletim e código de confirmação pelo endereço de email.
+        </li>
       </ul>
     </AdminTemplate>
   );
